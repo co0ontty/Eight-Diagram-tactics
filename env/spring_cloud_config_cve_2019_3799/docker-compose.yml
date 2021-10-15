@@ -1,0 +1,6 @@
+version: '3'
+services:
+ web:
+   image: co0ontty/cve-2019-3799
+   ports:
+    - "8888:8888"

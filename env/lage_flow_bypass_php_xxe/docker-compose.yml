@@ -1,0 +1,6 @@
+version: '2'
+services:
+ web:
+   image: co0ontty/php_xxe
+   ports:
+    - "80:80"
